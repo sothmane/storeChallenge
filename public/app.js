@@ -5,8 +5,13 @@ class App extends React.Component {
 
         this.state = {
             stores: [],
-            test: null
+            coords: []
         }
+    }
+
+    calculateDistance(a,b)
+    {
+        return Math.sqrt( Math.pow(a[0] - b[0],2) + Math.pow(a[1]-b[1],2));
     }
 
     componentWillMount(){
@@ -14,14 +19,30 @@ class App extends React.Component {
 
         fetch("http://192.168.1.7:3000/list").then((data)=>data.json()).then((json)=>{
 
-            let listStores = json.map((element)=>{
+            let listStores = json.sort((a,b)=>{
 
-                return <Card key={element._id} name={element.name} />;
-
+                return this.calculateDistance(a,this.state.coords) < this.calculateDistance(b,this.state.coords);
+            
+            }).map((element)=>{
+            
+                return <Card key={element._id} img={element.picture} name={element.name} />;
+            
             });
 
             this.setState({
                 stores: listStores
+            })
+
+        });
+
+        // getting the current location of the user
+
+        navigator.geolocation.getCurrentPosition((position)=>{
+
+            let coords = [ position.coords.latitude,position.coords.longitude ];
+            
+            this.setState({
+                coords:coords
             })
 
         });
