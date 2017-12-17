@@ -9,40 +9,51 @@ class App extends React.Component {
         }
     }
 
-    calculateDistance(a,b)
-    {
-        return (Math.sqrt( Math.pow(a[0] - b[0],2) + Math.pow(a[1]-b[1],2)) * 1000).toFixed(2);
+    calculateDistance(a, b) {
+        return (Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2)) * 1000).toFixed(2);
     }
 
-    componentWillMount(){
-        // getting the json file from the server to display it 
 
-        fetch("http://192.168.1.7:3000/list").then((data)=>data.json()).then((json)=>{
+    // getting the current location of the user
 
-            let listStores = json.sort((a,b)=>{
+    getCurrentLocation() {
 
-                return this.calculateDistance(a.location.coordinates,this.state.coords) - this.calculateDistance(b.location.coordinates,this.state.coords);
-            
-            }).map((element)=>{
-            
-                return <Card key={element._id} distance={this.calculateDistance(element.location.coordinates,this.state.coords)} img={element.picture} name={element.name} />;
-            
+        return new Promise((resolve, reject) => {
+
+            navigator.geolocation.getCurrentPosition((position) => {
+
+                let coords = [position.coords.latitude, position.coords.longitude];
+
+                resolve(coords);
+
             });
 
-            this.setState({
-                stores: listStores
-            })
-
         });
+    }
 
-        // getting the current location of the user
+    componentWillMount() {
+        // getting the json file from the server to display it 
 
-        navigator.geolocation.getCurrentPosition((position)=>{
+        fetch("http://192.168.1.7:3000/list").then((data) => data.json()).then((json) => {
 
-            let coords = [ position.coords.latitude,position.coords.longitude ];
-            
-            this.setState({
-                coords:coords
+            this.getCurrentLocation().then((coords) => {
+
+                let listStores = json.sort((a, b) => {
+
+                    console.log(this.state.coords);
+
+                    return this.calculateDistance(a.location.coordinates,coords) - this.calculateDistance(b.location.coordinates,coords);
+
+                }).map((element) => {
+
+                    return <Card key={element._id} distance={this.calculateDistance(element.location.coordinates,coords)} img={element.picture} name={element.name} />;
+
+                });
+
+                this.setState({
+                    stores: listStores
+                })
+
             })
 
         });
@@ -51,7 +62,7 @@ class App extends React.Component {
 
     render() {
         return <div className="container">
-            <Navbar text="NearbyStores"/>
+            <Navbar text="NearbyStores" />
             <div className="row">
 
                 {this.state.stores}
