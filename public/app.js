@@ -32,6 +32,7 @@ class App extends React.Component {
     }
 
     componentWillMount() {
+        
         // getting the json file from the server to display it 
 
         fetch("http://192.168.1.7:3000/list").then((data) => data.json()).then((json) => {
