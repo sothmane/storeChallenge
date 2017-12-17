@@ -49,3 +49,9 @@
 .action-section button{
     flex: 1;
 }
+
+.card .distance{
+    font-size: 13px;
+    display: block;
+    margin-top: 5px;
+}

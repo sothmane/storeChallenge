@@ -11,7 +11,7 @@ class App extends React.Component {
 
     calculateDistance(a,b)
     {
-        return Math.sqrt( Math.pow(a[0] - b[0],2) + Math.pow(a[1]-b[1],2));
+        return (Math.sqrt( Math.pow(a[0] - b[0],2) + Math.pow(a[1]-b[1],2)) * 1000).toFixed(2);
     }
 
     componentWillMount(){
@@ -21,11 +21,11 @@ class App extends React.Component {
 
             let listStores = json.sort((a,b)=>{
 
-                return this.calculateDistance(a,this.state.coords) < this.calculateDistance(b,this.state.coords);
+                return this.calculateDistance(a.location.coordinates,this.state.coords) - this.calculateDistance(b.location.coordinates,this.state.coords);
             
             }).map((element)=>{
             
-                return <Card key={element._id} img={element.picture} name={element.name} />;
+                return <Card key={element._id} distance={this.calculateDistance(element.location.coordinates,this.state.coords)} img={element.picture} name={element.name} />;
             
             });
 
