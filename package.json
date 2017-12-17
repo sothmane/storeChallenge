@@ -1,0 +1,28 @@
+{
+  "name": "storechallenge",
+  "version": "1.0.0",
+  "description": "this project is a challenge for hidden founders internship",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.0-rc0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sothmane/storeChallenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sothmane/storeChallenge/issues"
+  },
+  "homepage": "https://github.com/sothmane/storeChallenge#readme"
+}
