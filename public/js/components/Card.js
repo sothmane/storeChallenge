@@ -4,14 +4,24 @@ class Card extends React.Component{
         super(props);
     }
 
+    handleLikeButton()
+    {
+        console.log("like Clicked");
+    }
+
+    handleDislikeButton()
+    {
+        console.log("dislike Clicked")
+    }
+
     render()
     {
         return <div className="card col-md-2">
             <h3>{this.props.name}</h3>
             <img src={this.props.img} alt={this.props.name} />
             <div className="action-section">
-                <Button>Dislike</Button>
-                <Button>Like</Button>
+                <Button click={this.handleDislikeButton.bind(this)} >Dislike</Button>
+                <Button click={this.handleLikeButton.bind(this)} >Like</Button>
             </div>
         </div>;
     }
