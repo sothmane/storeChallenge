@@ -81,6 +81,16 @@ password:req.body.pass
            
           });
         });
+        res.end('<!DOCTYPE html>'+
+        '<html>'+
+        '    <head>'+
+        '        <meta charset="utf-8" />'+
+        '        <script type="text/javascript">alert("User Added successfully !"); window.location.href="http://127.0.0.1:8080/public/" </script>'+       
+        '    </head>'+ 
+        '    <body >'+
+        '    </body>'+
+        '</html>'); 
+    
     
     });
 
@@ -94,32 +104,36 @@ app.post('/log', (req, res) => {
             db.collection('user').find({email:req.body.email, password:req.body.pass}).toArray(function(err, result) {
                 if (err) throw err;
                
-                res.type('json');
-                res.end(JSON.stringify(result));
+                console.log(result);
+                if(result.length !== 0){
+                  res.end('<!DOCTYPE html>'+
+                  '<html>'+
+                  '    <head>'+
+                  '        <meta charset="utf-8" />'+
+                  '        <script type="text/javascript">alert("User logged in successfully"); window.location.href="http://127.0.0.1:8080/public/" </script>'+       
+                  '    </head>'+ 
+                  '    <body >'+
+                  '    </body>'+
+                  '</html>');
+                }else{
+                  res.end('<!DOCTYPE html>'+
+                  '<html>'+
+                  '    <head>'+
+                  '        <meta charset="utf-8" />'+
+                  '        <script type="text/javascript">alert("Username or password is incorrect !!"); window.location.href="http://127.0.0.1:8080/public/" </script>'+       
+                  '    </head>'+ 
+                  '    <body >'+
+                  '    </body>'+
+                  '</html>');
+                }
             });
         });
+       
+    
         
         });
         
-// adding card to favorites 
-app.get('/fav/:id/:id_s', (req, res, next) => {
-    
-    var favorite = {
-id_u:req.params.id,
-id_s:req.params.id_s
-    };
-        MongoClient.connect(url, function (err, client) {
-            if (err) throw err;
-            console.log("connected !");
-            var db = client.db("test");
-            db.collection('favorites').insertOne(favorite, function(err, res) {
-                if (err) throw err;
-                console.log("favorite inserted");
-            });
-    
-        });
-    
-    });
+
 
 
 
