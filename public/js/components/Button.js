@@ -5,5 +5,10 @@ function Button(props)
     if(props.children === "Dislike")
         btnStyle = "btn btn-danger";
 
-    return <button onClick={props.click} className={btnStyle} type="button">{props.children}</button>;
+    
+    let style = {
+        display: props.display
+    }
+
+    return <button style={style} onClick={props.click} className={btnStyle} type="button">{props.children}</button>;
 }

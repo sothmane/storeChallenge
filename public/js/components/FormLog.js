@@ -1,6 +1,6 @@
 function FormLog() {
     
-        return <form method="post" action="http://localhost:3000/log">
+        return <form method="post" action="http://192.168.1.7:3000/log">
          <h1> LogIN</h1>
             <div className="form-group ">
     <label>Email address</label>

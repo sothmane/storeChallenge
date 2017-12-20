@@ -1,1 +1,2 @@
-this project is a challenge for hidden founders internship 
+# Hidden Founders Challenge - Store Challenge
+
